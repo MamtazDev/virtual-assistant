@@ -60,7 +60,7 @@ const Conversation = ({
   };
 
   const adjustTextareaHeight = () => {
-    if (textareaRef.current && text !== "") {
+    if (textareaRef.current) {
       const rowCount = textareaRef.current.value.split("\n").length;
       const calculatedHeight = rowCount * lineHeight;
 
@@ -78,12 +78,8 @@ const Conversation = ({
     setNewVassHistory("");
     const calculatedHeight = 1 * lineHeight;
 
-    if (!text.includes("\n")) {
-      textareaRef.current.style.overflowY = "auto";
+    textareaRef.current.style.overflowY = "auto";
     textareaRef.current.style.height = `${1 * lineHeight}px`;
-    }
-
-    
   };
 
   const HistoryHandler = () => {
@@ -244,11 +240,15 @@ const Conversation = ({
   };
 
   const handleKeyDown = (e) => {
-   
-      if (e.key === "Enter" && !e.shiftKey && !text.includes("\n") && text !== "" ) {
-        HistoryHandler();
-      }
-    
+    if (
+      e.key === "Enter" &&
+      !e.shiftKey &&
+      !text.includes("\n") &&
+      text !== ""
+    ) {
+      HistoryHandler();
+      setText("")
+    }
   };
 
   return (
@@ -301,7 +301,8 @@ const Conversation = ({
                 <div className="question">
                   {chat[0] === "Please provide  detailed answers" ||
                   chat[0] === "Please provide  short answers" ||
-                  chat[0] === null || chat[0] === "\n" ? (
+                  chat[0] === null ||
+                  chat[0] === "\n" ? (
                     ""
                   ) : (
                     <p
@@ -312,7 +313,8 @@ const Conversation = ({
                   )}
                   {chat[0] === "Please provide  detailed answers" ||
                   chat[0] === "Please provide  short answers" ||
-                  chat[0] === null || chat[0] === "\n" ? (
+                  chat[0] === null ||
+                  chat[0] === "\n" ? (
                     ""
                   ) : (
                     <img src={user} alt="" />

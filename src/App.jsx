@@ -35,12 +35,12 @@ function App() {
       });
   };
 
-  // const chatHandler = () => {
-  //   const url = "https://testenv.innobyteslab.com/vaas/";
-  //   if (!clicked) {
-  //     initialApi(url);
-  //   }
-  // };
+  const chatHandler = () => {
+    const url = "https://testenv.innobyteslab.com/vaas/";
+    if (!clicked) {
+      initialApi(url);
+    }
+  };
 
   useEffect(() => {
     fetch("https://testenv.innobyteslab.com/vaas/config/", {
@@ -52,6 +52,9 @@ function App() {
       .then((data) => {
         setConfig(data);
       });
+  }, []);
+  useEffect(() => {
+    chatHandler();
   }, []);
 
   return (
@@ -105,7 +108,6 @@ function App() {
 
 export default App;
 
- 
 // module.exports = {
 //   env: { browser: true, es2020: true },
 //   extends: [
