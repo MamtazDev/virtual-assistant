@@ -186,12 +186,11 @@ const Conversation = ({
     if (
       e.key === "Enter" &&
       !e.shiftKey &&
-      !text.includes("\n") &&
       text !== ""
     ) {
       e.preventDefault();
       HistoryHandler();
-      setText("");
+      
     }
   };
 
