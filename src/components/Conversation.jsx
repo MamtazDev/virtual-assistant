@@ -19,19 +19,9 @@ const Conversation = ({
   responseHandeler,
   setResponseHandeler,
   initialLoading,
-  // history,
+  history,
   setHistory,
 }) => {
-  const history = [
-    [
-      "what are the benefits of customized solutions",
-      "<p>The benefits of customized solutions from Veryverse are numerous. Here are a few of them: \n\n • Increased efficiency: Our customized solutions are tailored to the specific needs of your business, allowing you to get the most out of your resources and maximize efficiency. \n\n• Improved customer experience: Our solutions are designed to provide a better customer experience, allowing you to better understand and meet the needs of your customers. \n\n• Cost savings: Our solutions are designed to reduce costs and increase profitability, allowing you to save money in the long run. \n\n• Increased innovation: Our solutions are designed to help you stay ahead of the competition and stay ahead of the curve in terms of innovation. \n\n• Improved scalability: Our solutions are designed to be scalable, allowing you to easily expand your business and reach new markets. \n\n• Increased security: Our solutions are designed to provide increased security, allowing you to protect your data and keep your business safe </p>",
-    ],
-    [
-      "fgfghfghft",
-      "I'm sorry, I don't know the answer to that question. However, I can tell you that Veryverse provides customized AI solutions that are tailored to the specific needs of our clients. This allows them to boost their productivity in the short term and accelerate their innovation and new products or services introductions in the longer term.",
-    ],
-  ];
   const [newVassHistory, setNewVassHistory] = useState("");
   const [apiKey, setApiKey] = useState("test-x0848bd789fjk13");
   const [feedback, setFeedback] = useState("");
