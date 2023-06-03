@@ -98,9 +98,6 @@ const Header = ({
                     </li>
                   </ul>
                 </div>
-                <button onClick={() => setDisplay(false)} className="close_btn">
-                  <img src={close} alt="" />
-                </button>
               </div>
             </div>
           </div>
