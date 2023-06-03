@@ -1,14 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react";
-
 import aiFace from "../assets/ai-face.png";
 import user from "../assets/user.png";
 import send from "../assets/send.png";
-import liked from "../assets/liked.png";
-import like from "../assets/like.png";
-import disliked from "../assets/disliked.png";
-import dislike from "../assets/dislike.png";
-import load from "../assets/loading.png";
 
 const Conversation = ({
   config,
@@ -123,9 +117,7 @@ const Conversation = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(successMessage, "mohi");
         console.log(data, "updateData");
-        // setVaasHistory(data.history);
         setNewVassHistory("");
         setHistory(data.history);
       })
@@ -142,36 +134,14 @@ const Conversation = ({
     const question = feedbacks[0];
     const answer = feedbacks[1];
 
-    // console.log(feedback, "feedback");
-
-    // const apiUrl = `https://testenv.innobyteslab.com/vaas/?vaas_sid=${vaasSid}&question=${question}&answer=${answer}&feedback=${status}`;
     const apiUrl = `https://testenv.innobyteslab.com/vaas/history/`;
-    // const successMessage = status ? "Like success:" : "Dislike success:";
-    // const successMessage = status ? "Like success:" : "Dislike success:";
-    // const errorMessage = status ? "Like error:" : "Dislike error:";
+
     const vaas_sid = vaasId;
     const feedback = status;
 
-    updateData(
-      // "https://testenv.innobyteslab.com/vaas/history/",
-      apiUrl,
-      vaas_sid,
-      question,
-      answer,
-      feedback
-    );
+    updateData(apiUrl, vaas_sid, question, answer, feedback);
 
-    // Update the UI state
     if (status) {
-      // const liked = isDisliked.filter((i) => i !== question);
-      // setIsDisliked(liked);
-      // setIsLiked((current) => [...current, question]);
-      // setIsLiked({ question, answer, index });
-      // if (isDisliked.question === question && isDisliked.answer === answer) {
-      //   setIsDisliked("");
-      // }
-      // localStorage.setItem("VADisLiked", JSON.stringify(liked));
-      // localStorage.setItem("VALiked", JSON.stringify([...isLiked, question]));
       setFeedback({ question, answer, index, status });
       localStorage.setItem(
         "VAFeedback",
@@ -179,19 +149,6 @@ const Conversation = ({
       );
     }
     if (!status) {
-      // const notliked = isLiked.filter((i) => i !== question);
-      // setIsLiked(notliked);
-      // setIsDisliked((current) => [...current, question]);
-      // setIsDisliked({ question, answer, index });
-      // if (isLiked.question === question && isLiked.answer === answer) {
-      //   setIsLiked("");
-      // }
-      // localStorage.setItem("VALiked", JSON.stringify(notliked));
-      // localStorage.setItem(
-      //   "VADisLiked",
-      //   JSON.stringify([...isDisliked, question])
-      // );
-
       setFeedback({ question, answer, index, status });
       localStorage.setItem(
         "VAFeedback",
@@ -210,17 +167,6 @@ const Conversation = ({
     }
   }, [responseHandeler]);
 
-  // useEffect(() => {
-  //   const liked = JSON.parse(localStorage.getItem("VALiked"));
-  //   const notLiked = JSON.parse(localStorage.getItem("VADisLiked"));
-  //   if (liked) {
-  //     setIsLiked(liked);
-  //   }
-
-  //   if (notLiked) {
-  //     setIsDisliked(notLiked);
-  //   }
-  // }, [isLiked.length, isDisliked.length]);
   useEffect(() => {
     const feedbacks = JSON.parse(localStorage.getItem("VAFeedback"));
     if (feedbacks) {
@@ -246,8 +192,9 @@ const Conversation = ({
       !text.includes("\n") &&
       text !== ""
     ) {
+      e.preventDefault(); 
       HistoryHandler();
-      setText("")
+      setText("");
     }
   };
 
@@ -281,18 +228,6 @@ const Conversation = ({
               }}
             />
           )}
-          {/* <div className="reaction">
-            <img
-              onClick={() => handleLikeDislike(true)}
-              src={like }
-              alt=""
-            />
-            <img
-              onClick={() => handleLikeDislike(false)}
-              src={dislike}
-              alt=""
-            />
-          </div> */}
         </div>
         <div ref={chatContainerRef} className="chatting">
           {history?.length > 0 &&
@@ -322,31 +257,6 @@ const Conversation = ({
                 </div>
                 <div className="answer">
                   <img src={aiFace} alt="" />
-                  {/* 
-                  {loading && history.length - 1 === index ? (
-                    <div
-                      style={{
-                        borderTop: `4px solid ${
-                          config.spinner_color ? config.spinner_color : ""
-                        }`,
-                      }}
-                      className="loading "
-                    ></div>
-                  ) : (
-                    <p
-                      style={{
-                        backgroundColor: config.vaas_response_bg_color
-                          ? config.vaas_response_bg_color
-                          : "",
-                        color: config.vaas_response_text_color
-                          ? config.vaas_response_text_color
-                          : "",
-                      }}
-                      dangerouslySetInnerHTML={{
-                        __html: sanitizeData(chat[1]),
-                      }}
-                    />
-                  )} */}
 
                   <p
                     style={{
@@ -361,35 +271,6 @@ const Conversation = ({
                       __html: sanitizeData(chat[1]),
                     }}
                   />
-
-                  {/* {history.length - 1 === index && (
-                    <div className="reaction">
-                      <img
-                        onClick={() => handleLikeDislike(chat, true, index)}
-                        src={
-                          feedback.status === true &&
-                          feedback.question === chat[0] &&
-                          feedback.answer === chat[1]
-                            ? // feedback.index === index
-                              liked
-                            : like
-                        }
-                        alt=""
-                      />
-                      <img
-                        onClick={() => handleLikeDislike(chat, false, index)}
-                        src={
-                          feedback.status === false &&
-                          feedback.question === chat[0] &&
-                          feedback.answer === chat[1]
-                            ? // feedback.index === index
-                              disliked
-                            : dislike
-                        }
-                        alt=""
-                      />
-                    </div>
-                  )} */}
                 </div>
               </div>
             ))}
