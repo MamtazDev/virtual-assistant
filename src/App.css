@@ -57,6 +57,7 @@ body {
   top: 0;
   z-index: 1;
 }
+
 .navbar {
   padding: 12px 0;
   align-items: center;
@@ -211,13 +212,11 @@ body {
 }
 
 .conversation .answer p {
-  /* background-color: #2E475D; */
   border-radius: 8px 16px 16px 8px;
   padding: 18px 140px 18px 20px;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #FFFFFF;
   width: 100%;
 }
 
