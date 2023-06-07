@@ -270,7 +270,12 @@ const Conversation = ({
 
           {loading && (
             <div className="question">
-              <p>{text}</p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeData(text),
+                }}
+              />
+              {/* <p>{text}</p> */}
             </div>
           )}
           {loading && (
