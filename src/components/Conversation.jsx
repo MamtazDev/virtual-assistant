@@ -174,7 +174,7 @@ const Conversation = ({
           config.quick_call ||
           config.text_us_url) && (
           <div className="answer">
-            <img src={aiFace} alt="" />
+            <img src={config.logo ? config.logo : aiFace} alt="" />
 
             {initialLoading ? (
               <div
@@ -232,7 +232,7 @@ const Conversation = ({
                   )}
                 </div>
                 <div className="answer">
-                  <img src={aiFace} alt="" />
+                  <img src={config.logo ? config.logo : aiFace} alt="" />
 
                   <p
                     style={{
@@ -280,7 +280,7 @@ const Conversation = ({
           )}
           {loading && (
             <div className="answer">
-              <img src={aiFace} alt="" />
+              <img src={config.logo ? config.logo : aiFace} alt="" />
               <div
                 style={{
                   borderTop: `4px solid ${
