@@ -3,21 +3,19 @@ import { useEffect, useRef, useState } from "react";
 import aiFace from "../assets/ai-face.png";
 import user from "../assets/user.png";
 import send from "../assets/send.png";
+import liked from "../assets/liked.png";
+import like from "../assets/like.png";
+import disliked from "../assets/disliked.png";
+import dislike from "../assets/dislike.png";
 
 const Conversation = ({
   config,
-  display,
-  setDisplay,
   vaasId,
-  setVaasId,
-  initialAnswer,
-  setinitialAnswer,
   loading,
   setLoading,
   setText,
   text,
   responseHandeler,
-  setResponseHandeler,
   initialLoading,
   history,
   setHistory,
@@ -85,7 +83,7 @@ const Conversation = ({
         question: text,
       }),
     };
-    fetch("https://testenv.innobyteslab.com/vaas/history/", requestOptions)
+    fetch("https://testenv.innobyteslab.com/vaas/historyv2/", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data, "jfklsklfkldsf");
@@ -122,35 +120,14 @@ const Conversation = ({
       });
   };
 
-  const handleLikeDislike = (feedbacks, status, index) => {
-    // const vaasSid = vaasId;
-
-    // console.log(feedback[0], feedback[1])
-
-    const question = feedbacks[0];
-    const answer = feedbacks[1];
-
-    const apiUrl = `https://testenv.innobyteslab.com/vaas/history/`;
-
+  const handleLikeDislike = (chat, status) => {
+    const question = chat[0];
+    const answer = chat[1];
     const vaas_sid = vaasId;
     const feedback = status;
+    const apiUrl = `https://testenv.innobyteslab.com/vaas/historyv2/`;
 
     updateData(apiUrl, vaas_sid, question, answer, feedback);
-
-    if (status) {
-      setFeedback({ question, answer, index, status });
-      localStorage.setItem(
-        "VAFeedback",
-        JSON.stringify({ question, answer, index, status })
-      );
-    }
-    if (!status) {
-      setFeedback({ question, answer, index, status });
-      localStorage.setItem(
-        "VAFeedback",
-        JSON.stringify({ question, answer, index, status })
-      );
-    }
   };
 
   useEffect(() => {
@@ -172,6 +149,7 @@ const Conversation = ({
   }, [feedback.question]);
 
   const sanitizeData = (data) => {
+    console.log(data, "mohiiiiiiiiiii");
     const parser = new DOMParser();
     const doc = parser.parseFromString(data, "text/html");
     const aTags = doc.getElementsByTagName("a");
@@ -183,48 +161,48 @@ const Conversation = ({
   };
 
   const handleKeyDown = (e) => {
-    if (
-      e.key === "Enter" &&
-      !e.shiftKey &&
-      text !== ""
-    ) {
+    if (e.key === "Enter" && !e.shiftKey && text !== "") {
       e.preventDefault();
       HistoryHandler();
-      
     }
   };
 
   return (
     <div className="conversation">
       <div className="container">
-        <div className="answer">
-          <img src={aiFace} alt="" />
+        {(config.appointment_url ||
+          config.quick_call ||
+          config.text_us_url) && (
+          <div className="answer">
+            <img src={aiFace} alt="" />
 
-          {initialLoading ? (
-            <div
-              style={{
-                borderTop: `4px solid ${
-                  config.spinner_color ? config.spinner_color : ""
-                }`,
-              }}
-              className="loading "
-            ></div>
-          ) : (
-            <p
-              style={{
-                backgroundColor: config.vaas_response_bg_color
-                  ? config.vaas_response_bg_color
-                  : "",
-                color: config.vaas_response_text_color
-                  ? config.vaas_response_text_color
-                  : "",
-              }}
-              dangerouslySetInnerHTML={{
-                __html: sanitizeData(config.greeting),
-              }}
-            />
-          )}
-        </div>
+            {initialLoading ? (
+              <div
+                style={{
+                  borderTop: `4px solid ${
+                    config.spinner_color ? config.spinner_color : ""
+                  }`,
+                }}
+                className="loading "
+              ></div>
+            ) : (
+              <p
+                style={{
+                  backgroundColor: config.vaas_response_bg_color
+                    ? config.vaas_response_bg_color
+                    : "",
+                  color: config.vaas_response_text_color
+                    ? config.vaas_response_text_color
+                    : "",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeData(config.greeting),
+                }}
+              />
+            )}
+          </div>
+        )}
+
         <div ref={chatContainerRef} className="chatting">
           {history?.length > 0 &&
             history?.map((chat, index) => (
@@ -232,20 +210,22 @@ const Conversation = ({
                 <div className="question">
                   {chat[0] === "Please provide  detailed answers" ||
                   chat[0] === "Please provide  short answers" ||
+                  chat[0] === "\n" ||
                   chat[0] === null ||
-                  chat[0] === "\n" ? (
+                  chat[0] === "" ? (
                     ""
                   ) : (
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: chat[0],
+                        __html: sanitizeData(chat[0]),
                       }}
                     />
                   )}
                   {chat[0] === "Please provide  detailed answers" ||
                   chat[0] === "Please provide  short answers" ||
                   chat[0] === null ||
-                  chat[0] === "\n" ? (
+                  chat[0] === "\n" ||
+                  chat[0] === "" ? (
                     ""
                   ) : (
                     <img src={user} alt="" />
@@ -267,9 +247,32 @@ const Conversation = ({
                       __html: sanitizeData(chat[1]),
                     }}
                   />
+
+                  {chat[0] === null ? (
+                    ""
+                  ) : (
+                    <div className="reaction">
+                      <img
+                        onClick={() => handleLikeDislike(chat, true)}
+                        src={chat[2] === true ? liked : like}
+                        alt=""
+                      />
+                      <img
+                        onClick={() => handleLikeDislike(chat, false)}
+                        src={chat[2] === false ? disliked : dislike}
+                        alt=""
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
+
+          {loading && (
+            <div className="question">
+              <p>{text}</p>
+            </div>
+          )}
           {loading && (
             <div className="answer">
               <img src={aiFace} alt="" />
@@ -279,7 +282,7 @@ const Conversation = ({
                     config.spinner_color ? config.spinner_color : ""
                   }`,
                 }}
-                className="loading "
+                className="loading"
               ></div>
             </div>
           )}
@@ -305,7 +308,15 @@ const Conversation = ({
                   : "Type your question here.... (Scribe tu pregunta aqui....)"
               }
             />
-            <button onClick={HistoryHandler} disabled={text === ""}>
+            <button
+              style={{
+                backgroundColor: config.send_bg_color
+                  ? config.send_bg_color
+                  : "#35255C",
+              }}
+              onClick={HistoryHandler}
+              disabled={text === ""}
+            >
               <img src={send} alt="" />
             </button>
           </div>

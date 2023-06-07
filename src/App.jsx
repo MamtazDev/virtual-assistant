@@ -91,35 +91,8 @@ function App() {
           <Footer config={config} />
         </div>
       </div>
-
-      {/* <img
-        width={60}
-        onClick={() => {
-          setDisplay(!display);
-          chatHandler();
-        }}
-        className="sms_icon img-fluid"
-        src={messenger}
-        alt=""
-      /> */}
     </div>
   );
 }
 
 export default App;
-
-// module.exports = {
-//   env: { browser: true, es2020: true },
-//   extends: [
-//     'eslint:recommended',
-//     'plugin:react/recommended',
-//     'plugin:react/jsx-runtime',
-//     'plugin:react-hooks/recommended',
-//   ],
-//   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-//   settings: { react: { version: '18.2' } },
-//   plugins: ['react-refresh'],
-//   rules: {
-//     'react-refresh/only-export-components': 'warn',
-//   },
-// }
