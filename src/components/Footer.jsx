@@ -18,7 +18,14 @@ const Footer = ({ config }) => {
                 }
                 rel="noreferrer"
               >
-                <button className="violet_btn">
+                <button
+                  style={{
+                    backgroundColor: config.appointment_bg_color
+                      ? config.appointment_bg_color
+                      : "",
+                  }}
+                  className="violet_btn"
+                >
                   <img src={calender} alt="" />
                   <span>Book an Appointment</span>
                 </button>
@@ -30,7 +37,14 @@ const Footer = ({ config }) => {
                 href={config.text_us_url ? config.text_us_url : ""}
                 rel="noreferrer"
               >
-                <button className="violet_btn">
+                <button
+                  style={{
+                    backgroundColor: config.text_us_bg_color
+                      ? config.text_us_bg_color
+                      : "",
+                  }}
+                  className="violet_btn"
+                >
                   <img src={text} alt="" />
                   <span>Text Us</span>
                 </button>
@@ -46,7 +60,14 @@ const Footer = ({ config }) => {
                 }
                 rel="noreferrer"
               >
-                <button className="warning_btn">
+                <button
+                  style={{
+                    backgroundColor: config.quick_call_bg_color
+                      ? config.quick_call_bg_color
+                      : "#E7B43E",
+                  }}
+                  className="warning_btn"
+                >
                   <img src={call} alt="" />
                   <span>Quick Call</span>
                 </button>
