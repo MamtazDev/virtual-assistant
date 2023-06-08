@@ -153,8 +153,12 @@ const Conversation = ({
     const parser = new DOMParser();
     const doc = parser.parseFromString(data, "text/html");
     const aTags = doc.getElementsByTagName("a");
+
     for (let i = 0; i < aTags.length; i++) {
       aTags[i].setAttribute("target", "_blank");
+      aTags[i].style.color = config.vaas_response_text_color
+        ? config.vaas_response_text_color
+        : "";
     }
     const sanitizedData = doc.body.innerHTML.replace(/\n/g, "<br>");
     return sanitizedData;
@@ -317,7 +321,7 @@ const Conversation = ({
               style={{
                 backgroundColor: config.send_bg_color
                   ? config.send_bg_color
-                  : "#35255C",
+                  : "#D9D9D9",
               }}
               onClick={HistoryHandler}
               disabled={text === ""}

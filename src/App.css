@@ -235,12 +235,13 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  text-align: right;
+  /* text-align: left; */
   color: #171717;
   background: #F5F5F5;
   border-radius: 16px;
   padding: 18px 42px;
   width: 100%;
+
 }
 
 .conversation .question img {
