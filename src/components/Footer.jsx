@@ -3,6 +3,7 @@ import text from "../assets/text.png";
 import call from "../assets/call.png";
 
 const Footer = ({ config }) => {
+  console.log(config, "connn");
   return (
     <div className="footer">
       <div className="container">
@@ -74,6 +75,22 @@ const Footer = ({ config }) => {
               </a>
             )}
           </div>
+          <p>
+            <a
+              style={{
+                color: `${config?.text_us_bg_color ? text_us_bg_color : "red"}`,
+              }}
+              target="_blank"
+              href={
+                config.text_us_url
+                  ? config.text_us_url
+                  : "https://squareup.com/appointments/book/fzx6h5zvy9re4e/LYG594QJD0CHT/services"
+              }
+              rel="noreferrer"
+            >
+              {config.text_us ? config.text_us : "Text us"}
+            </a>{" "}
+          </p>
           <p>
             <a
               target="_blank"

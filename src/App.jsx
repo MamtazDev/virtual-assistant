@@ -53,7 +53,6 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "dddd");
         setVaasId(data.vaas_sid);
         localStorage.setItem("veryVerseVassID", data.vaas_sid);
         setinitialAnswer(data.answer);
