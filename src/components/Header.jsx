@@ -10,6 +10,7 @@ const Header = ({
   setText,
   responseHandeler,
   setResponseHandeler,
+  resetHistoryHandler,
 }) => {
   const [dropdown, setDropdown] = useState("Short Response");
 
@@ -77,7 +78,7 @@ const Header = ({
                     <img style={{ marginLeft: "10px" }} src={arrow} alt="" />
                   </button>
                   <ul className="dropdown-menu">
-                    <li>
+                    <li className="fs-6">
                       {dropdown === "Short Response" ? (
                         <a
                           className="dropdown-item"
@@ -95,6 +96,15 @@ const Header = ({
                           Short Response
                         </a>
                       )}
+                    </li>
+                    <li className="fs-6">
+                      <a
+                        className="dropdown-item"
+                        href="#"
+                        onClick={resetHistoryHandler}
+                      >
+                        Reset conversation
+                      </a>
                     </li>
                   </ul>
                 </div>

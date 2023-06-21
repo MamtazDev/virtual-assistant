@@ -7,7 +7,7 @@ import messenger from "./assets/ai-face.png";
 
 function App() {
   const [display, setDisplay] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
   const [config, setConfig] = useState([]);
   const [vaasId, setVaasId] = useState(null);
   const [initialAnswer, setinitialAnswer] = useState(null);
@@ -18,44 +18,93 @@ function App() {
   const [text, setText] = useState("");
   const [responseHandeler, setResponseHandeler] = useState();
 
-  const initialApi = (Base_api) => {
+  // ---- previous code----
+  // const initialApi = (Base_api) => {
+  //   setInitialLoading(true);
+  //   fetch(`${import.meta.env.VITE_BASE_URL}/`, {
+  //     headers: {
+  //       "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setVaasId(data.vaas_sid);
+  //       setClicked(true);
+  //       setinitialAnswer(data.answer);
+  //       setInitialLoading(false);
+  //     });
+  // };
+
+  // const chatHandler = () => {
+  //   const url = `${import.meta.env.VITE_BASE_URL}/`;
+  //   if (!clicked) {
+  //     initialApi(url);
+  //   }
+  // };
+
+  // ---previous code ---
+
+  const initialApi = () => {
     setInitialLoading(true);
-    fetch("https://testenv.innobyteslab.com/vaas/", {
+    fetch(`${import.meta.env.VITE_BASE_URL}/`, {
       headers: {
-        "VAAS-API-Key": "test-x0848bd789fjk13",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
       },
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "initial api");
+        console.log(data, "dddd");
         setVaasId(data.vaas_sid);
-        setClicked(true);
+        localStorage.setItem("veryVerseVassID", data.vaas_sid);
         setinitialAnswer(data.answer);
         setInitialLoading(false);
       });
   };
 
-  const chatHandler = () => {
-    const url = "https://testenv.innobyteslab.com/vaas/";
-    if (!clicked) {
-      initialApi(url);
-    }
+  const resetHistoryHandler = () => {
+    localStorage.removeItem("veryVerseVassID");
+    setHistory("");
+    initialApi();
   };
 
   useEffect(() => {
-    fetch("https://testenv.innobyteslab.com/vaas/config/", {
+    const Id = localStorage.getItem("veryVerseVassID");
+    fetch(`${import.meta.env.VITE_BASE_URL}/config/`, {
       headers: {
-        "VAAS-API-Key": "test-x0848bd789fjk13",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
       },
     })
       .then((res) => res.json())
       .then((data) => {
         setConfig(data);
       });
+
+    if (Id) {
+      setVaasId(Id);
+
+      fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        },
+        body: JSON.stringify({
+          vaas_sid: Id,
+          question: null,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => setHistory(data.history));
+    } else if (!Id) {
+      initialApi();
+    }
   }, []);
-  useEffect(() => {
-    chatHandler();
-  }, []);
+
+  // ---previous code---
+  // useEffect(() => {
+  //   chatHandler();
+  // }, []);
+  // ---previous code---
 
   return (
     <div>
@@ -67,6 +116,7 @@ function App() {
           setText={setText}
           responseHandeler={responseHandeler}
           setResponseHandeler={setResponseHandeler}
+          resetHistoryHandler={resetHistoryHandler}
         />
         <div>
           <Conversation

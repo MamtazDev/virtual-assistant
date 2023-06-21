@@ -54,7 +54,7 @@ const Conversation = ({
 
       if (rowCount > maxRows) {
         textareaRef.current.style.overflowY = "auto";
-        textareaRef.current.style.height = `${maxRows * lineHeight}px`;
+        textareaRef.current.style.height = `${maxRows * lineHeight * 1.7}px`;
       } else {
         textareaRef.current.style.overflowY = "hidden";
         textareaRef.current.style.height = `${calculatedHeight}px`;
@@ -76,17 +76,16 @@ const Conversation = ({
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "VAAS-API-Key": "test-x0848bd789fjk13",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
       },
       body: JSON.stringify({
         vaas_sid: vaasId,
         question: text,
       }),
     };
-    fetch("https://testenv.innobyteslab.com/vaas/historyv2/", requestOptions)
+    fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, "jfklsklfkldsf");
         setHistory(data.history);
         setResponse(data.answer);
         setNewVassHistory("");
@@ -98,20 +97,17 @@ const Conversation = ({
   };
   const lastElement = history[history.length - 1];
 
-  console.log(lastElement, "last");
-
   const updateData = (apiUrl, vaas_sid, question, answer, feedback) => {
     fetch(apiUrl, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "VAAS-API-Key": apiKey,
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
       },
       body: JSON.stringify({ vaas_sid, question, answer, feedback }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, "updateData");
         setNewVassHistory("");
         setHistory(data.history);
       })
@@ -125,7 +121,7 @@ const Conversation = ({
     const answer = chat[1];
     const vaas_sid = vaasId;
     const feedback = status;
-    const apiUrl = `https://testenv.innobyteslab.com/vaas/historyv2/`;
+    const apiUrl = `${import.meta.env.VITE_BASE_URL}/historyv2/`;
 
     updateData(apiUrl, vaas_sid, question, answer, feedback);
   };
@@ -149,7 +145,6 @@ const Conversation = ({
   }, [feedback.question]);
 
   const sanitizeData = (data) => {
-    console.log(data, "mohiiiiiiiiiii");
     const parser = new DOMParser();
     const doc = parser.parseFromString(data, "text/html");
     const aTags = doc.getElementsByTagName("a");
@@ -220,6 +215,7 @@ const Conversation = ({
                     ""
                   ) : (
                     <p
+                      style={{ wordWrap: "break-word" }}
                       dangerouslySetInnerHTML={{
                         __html: sanitizeData(chat[0]),
                       }}
@@ -297,17 +293,23 @@ const Conversation = ({
           )}
         </div>
         <div className="input_field">
-          <div className="user_input">
+          <div
+            className="user_input"
+            style={{ overflowX: "auto", maxWidth: "100%" }}
+          >
             <textarea
               style={{
+                whiteSpace: "pre-wrap",
+                minWidth: "100%",
                 backgroundColor: config.user_input_bg_color
                   ? config.user_input_bg_color
-                  : "#EFEFEF ",
+                  : "#EFEFEF",
                 color: config.user_input_text_color
                   ? config.user_input_text_color
                   : "black",
               }}
               ref={textareaRef}
+          
               value={newVassHistory}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
@@ -317,6 +319,7 @@ const Conversation = ({
                   : "Type your question here.... (Scribe tu pregunta aqui....)"
               }
             />
+
             <button
               style={{
                 backgroundColor: config.send_bg_color
