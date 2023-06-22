@@ -78,7 +78,7 @@ const Header = ({
                     <img style={{ marginLeft: "10px" }} src={arrow} alt="" />
                   </button>
                   <ul className="dropdown-menu">
-                    <li className="fs-6">
+                    <li>
                       {dropdown === "Short Response" ? (
                         <a
                           className="dropdown-item"
@@ -97,13 +97,13 @@ const Header = ({
                         </a>
                       )}
                     </li>
-                    <li className="fs-6">
+                    <li>
                       <a
                         className="dropdown-item"
                         href="#"
                         onClick={resetHistoryHandler}
                       >
-                        Reset conversation
+                        New conversation
                       </a>
                     </li>
                   </ul>

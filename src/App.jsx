@@ -14,6 +14,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(false);
   const [history, setHistory] = useState([]);
+  const [permission, setPermission] = useState(null);
 
   const [text, setText] = useState("");
   const [responseHandeler, setResponseHandeler] = useState();
@@ -53,7 +54,25 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data, "peeee");
         setVaasId(data.vaas_sid);
+        if (data.vaas_sid) {
+          fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+            },
+            body: JSON.stringify({
+              vaas_sid: data.vaas_sid,
+              question: null,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setPermission(data.permissions);
+            });
+        }
         localStorage.setItem("veryVerseVassID", data.vaas_sid);
         setinitialAnswer(data.answer);
         setInitialLoading(false);
@@ -93,7 +112,10 @@ function App() {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setHistory(data.history));
+        .then((data) => {
+          setHistory(data.history);
+          setPermission(data.permissions);
+        });
     } else if (!Id) {
       initialApi();
     }
@@ -104,6 +126,9 @@ function App() {
   //   chatHandler();
   // }, []);
   // ---previous code---
+
+  console.log(config, "config");
+  console.log(permission, "permiss");
 
   return (
     <div>
@@ -137,7 +162,7 @@ function App() {
             setHistory={setHistory}
           />
 
-          <Footer config={config} />
+          <Footer config={config} permission={permission} />
         </div>
       </div>
     </div>

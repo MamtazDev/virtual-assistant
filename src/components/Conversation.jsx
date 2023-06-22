@@ -25,11 +25,20 @@ const Conversation = ({
   const [feedback, setFeedback] = useState("");
   const textareaRef = useRef(null);
   const [response, setResponse] = useState("");
+  const [isScrollbarHovered, setIsScrollbarHovered] = useState(false);
 
   const chatContainerRef = useRef(null);
 
   const maxRows = 4; // Maximum number of rows allowed
   const lineHeight = 20; // Line height of the textarea
+
+  const handleScrollbarMouseEnter = () => {
+    setIsScrollbarHovered(true);
+  };
+
+  const handleScrollbarMouseLeave = () => {
+    setIsScrollbarHovered(false);
+  };
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -50,11 +59,11 @@ const Conversation = ({
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
       const rowCount = textareaRef.current.value.split("\n").length;
-      const calculatedHeight = rowCount * lineHeight;
+      const calculatedHeight = rowCount * lineHeight * 2;
 
       if (rowCount > maxRows) {
         textareaRef.current.style.overflowY = "auto";
-        textareaRef.current.style.height = `${maxRows * lineHeight * 1.7}px`;
+        textareaRef.current.style.height = `${maxRows * lineHeight * 2}px`;
       } else {
         textareaRef.current.style.overflowY = "hidden";
         textareaRef.current.style.height = `${calculatedHeight}px`;
@@ -86,6 +95,7 @@ const Conversation = ({
     fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data, "hiiiss");
         setHistory(data.history);
         setResponse(data.answer);
         setNewVassHistory("");
@@ -299,8 +309,6 @@ const Conversation = ({
           >
             <textarea
               style={{
-                whiteSpace: "pre-wrap",
-                minWidth: "100%",
                 backgroundColor: config.user_input_bg_color
                   ? config.user_input_bg_color
                   : "#EFEFEF",
@@ -309,7 +317,6 @@ const Conversation = ({
                   : "black",
               }}
               ref={textareaRef}
-          
               value={newVassHistory}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
@@ -318,6 +325,7 @@ const Conversation = ({
                   ? config.user_input_placeholder
                   : "Type your question here.... (Scribe tu pregunta aqui....)"
               }
+              className="textarea-scrollbar"
             />
 
             <button

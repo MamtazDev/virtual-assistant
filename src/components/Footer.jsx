@@ -2,14 +2,17 @@ import calender from "../assets/calender.png";
 import text from "../assets/text.png";
 import call from "../assets/call.png";
 
-const Footer = ({ config }) => {
+const Footer = ({ config, permission }) => {
   console.log(config, "connn");
+  console.log(permission, "peeermission");
   return (
     <div className="footer">
       <div className="container">
         <div className="footer_inner">
-          <div className="btn_group">
-            {config.appointment && (
+          {config?.control_buttons && permission.length > 0 && (
+            <div className="btn_group">
+              {/* --- previous button --- */}
+              {/* {config.appointment && (
               <a
                 target="_blank"
                 href={
@@ -73,8 +76,126 @@ const Footer = ({ config }) => {
                   <span>Quick Call</span>
                 </button>
               </a>
-            )}
-          </div>
+            )} */}
+
+              {/* --- previous button --- */}
+
+              {/* --- new button --- */}
+
+              {permission[0] === true && (
+                <a
+                  target="_blank"
+                  href={
+                    config.quick_call_url
+                      ? config.quick_call_url
+                      : "tel: +1-804-222-1111"
+                  }
+                  rel="noreferrer"
+                >
+                  <button
+                    style={{
+                      backgroundColor: config.control_buttons_bg_color
+                        ? config.control_buttons_bg_color
+                        : "#333f50",
+                    }}
+                    className="violet_btn"
+                  >
+                    <span>Sign in</span>
+                  </button>
+                </a>
+              )}
+              {permission[1] === true && (
+                <a
+                  target="_blank"
+                  href={
+                    config.quick_call_url
+                      ? config.quick_call_url
+                      : "tel: +1-804-222-1111"
+                  }
+                  rel="noreferrer"
+                >
+                  <button
+                    style={{
+                      backgroundColor: config.control_buttons_bg_color
+                        ? config.control_buttons_bg_color
+                        : "#333f50",
+                    }}
+                    className="violet_btn"
+                  >
+                    <span>Sign out</span>
+                  </button>
+                </a>
+              )}
+              {permission[2] === true && (
+                <a
+                  target="_blank"
+                  href={
+                    config.quick_call_url
+                      ? config.quick_call_url
+                      : "tel: +1-804-222-1111"
+                  }
+                  rel="noreferrer"
+                >
+                  <button
+                    style={{
+                      backgroundColor: config.control_buttons_bg_color
+                        ? config.control_buttons_bg_color
+                        : "#333f50",
+                    }}
+                    className="violet_btn"
+                  >
+                    <span>Upload files</span>
+                  </button>
+                </a>
+              )}
+              {permission[3] === true && (
+                <a
+                  target="_blank"
+                  href={
+                    config.quick_call_url
+                      ? config.quick_call_url
+                      : "tel: +1-804-222-1111"
+                  }
+                  rel="noreferrer"
+                >
+                  <button
+                    style={{
+                      backgroundColor: config.control_buttons_bg_color
+                        ? config.control_buttons_bg_color
+                        : "#333f50",
+                    }}
+                    className="violet_btn"
+                  >
+                    <span>delete files</span>
+                  </button>
+                </a>
+              )}
+              {permission[4] === true && (
+                <a
+                  target="_blank"
+                  href={
+                    config.quick_call_url
+                      ? config.quick_call_url
+                      : "tel: +1-804-222-1111"
+                  }
+                  rel="noreferrer"
+                >
+                  <button
+                    style={{
+                      backgroundColor: config.control_buttons_bg_color
+                        ? config.control_buttons_bg_color
+                        : "#333f50",
+                    }}
+                    className="violet_btn"
+                  >
+                    <span>Create context</span>
+                  </button>
+                </a>
+              )}
+
+              {/* --- new button --- */}
+            </div>
+          )}
           <p>
             <a
               style={{
@@ -82,13 +203,13 @@ const Footer = ({ config }) => {
               }}
               target="_blank"
               href={
-                config.text_us_url
-                  ? config.text_us_url
+                config.article_url
+                  ? config.article_url
                   : "https://squareup.com/appointments/book/fzx6h5zvy9re4e/LYG594QJD0CHT/services"
               }
               rel="noreferrer"
             >
-              {config.text_us ? config.text_us : "Text us"}
+              {config.article_text ? config.article_text : ""}
             </a>{" "}
           </p>
           <p>

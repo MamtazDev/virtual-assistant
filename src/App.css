@@ -260,7 +260,7 @@ body {
   position: relative;
 }
 
-.conversation .user_input textarea {
+/* .conversation .user_input textarea {
   border: none;
   background: #efefef;
   max-height: 200px;
@@ -270,6 +270,38 @@ body {
   width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+} */
+
+.textarea-scrollbar {
+  border: none;
+  background: #efefef;
+  max-height: 200px;
+  height: 22px;
+  resize: none;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #888888 transparent;
+}
+
+.textarea-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888888;
+  border-radius: 4px;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555555;
+  cursor: grab;
 }
 
 .conversation .user_input textarea::placeholder {
@@ -283,7 +315,7 @@ body {
 }
 
 .conversation .user_input textarea::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
 }
 
 /* body::-webkit-scrollbar {
@@ -297,6 +329,7 @@ body {
   border: none;
   position: absolute;
   bottom: 5px;
+  right: 15px;
   cursor: pointer;
 }
 
