@@ -65,7 +65,9 @@ function App() {
             },
             body: JSON.stringify({
               vaas_sid: data.vaas_sid,
-              question: null,
+              question: "who are you",
+              answer: null,
+              feedback: null,
             }),
           })
             .then((res) => res.json())
