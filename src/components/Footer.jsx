@@ -102,7 +102,6 @@ const Footer = ({ config, permission }) => {
               )}
               {permission[1] === true && (
                 <a
-                  target="_blank"
                   href="https://testenv.innobyteslab.com/page/logout.html"
                   rel="noreferrer"
                 >
