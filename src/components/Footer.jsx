@@ -85,11 +85,7 @@ const Footer = ({ config, permission }) => {
               {permission[0] === true && (
                 <a
                   target="_blank"
-                  href={
-                    config.quick_call_url
-                      ? config.quick_call_url
-                      : "tel: +1-804-222-1111"
-                  }
+                  href="https://testenv.innobyteslab.com/page/login.html"
                   rel="noreferrer"
                 >
                   <button
@@ -107,11 +103,7 @@ const Footer = ({ config, permission }) => {
               {permission[1] === true && (
                 <a
                   target="_blank"
-                  href={
-                    config.quick_call_url
-                      ? config.quick_call_url
-                      : "tel: +1-804-222-1111"
-                  }
+                  href="https://testenv.innobyteslab.com/page/logout.html"
                   rel="noreferrer"
                 >
                   <button
@@ -129,11 +121,7 @@ const Footer = ({ config, permission }) => {
               {permission[2] === true && (
                 <a
                   target="_blank"
-                  href={
-                    config.quick_call_url
-                      ? config.quick_call_url
-                      : "tel: +1-804-222-1111"
-                  }
+                  href="https://testenv.innobyteslab.com/page/upload.html"
                   rel="noreferrer"
                 >
                   <button
@@ -151,11 +139,7 @@ const Footer = ({ config, permission }) => {
               {permission[3] === true && (
                 <a
                   target="_blank"
-                  href={
-                    config.quick_call_url
-                      ? config.quick_call_url
-                      : "tel: +1-804-222-1111"
-                  }
+                  href="https://testenv.innobyteslab.com/page/delete.html"
                   rel="noreferrer"
                 >
                   <button
@@ -173,11 +157,7 @@ const Footer = ({ config, permission }) => {
               {permission[4] === true && (
                 <a
                   target="_blank"
-                  href={
-                    config.quick_call_url
-                      ? config.quick_call_url
-                      : "tel: +1-804-222-1111"
-                  }
+                  href="https://testenv.innobyteslab.com/page/context.html"
                   rel="noreferrer"
                 >
                   <button

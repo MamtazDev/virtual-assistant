@@ -127,8 +127,8 @@ function App() {
   // }, []);
   // ---previous code---
 
-  // console.log(config, "config");
-  // console.log(permission, "permiss");
+  console.log(config, "config");
+  console.log(permission, "permiss");
 
   return (
     <div>
