@@ -153,7 +153,7 @@ const Footer = ({ config, permission }) => {
                     }}
                     className="violet_btn"
                   >
-                    <span>delete files</span>
+                    <span>Delete files</span>
                   </button>
                 </a>
               )}
