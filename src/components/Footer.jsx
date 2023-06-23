@@ -9,7 +9,7 @@ const Footer = ({ config, permission }) => {
     <div className="footer">
       <div className="container">
         <div className="footer_inner">
-          {config?.control_buttons && permission.length > 0 && (
+          {config?.control_buttons && permission?.length > 0 && (
             <div className="btn_group">
               {/* --- previous button --- */}
               {/* {config.appointment && (
@@ -84,7 +84,6 @@ const Footer = ({ config, permission }) => {
 
               {permission[0] === true && (
                 <a
-                  target="_blank"
                   href="https://testenv.innobyteslab.com/page/login.html"
                   rel="noreferrer"
                 >
