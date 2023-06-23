@@ -3,8 +3,8 @@ import text from "../assets/text.png";
 import call from "../assets/call.png";
 
 const Footer = ({ config, permission }) => {
-  console.log(config, "connn");
-  console.log(permission, "peeermission");
+  // console.log(config, "connn");
+  // console.log(permission, "peeermission");
   return (
     <div className="footer">
       <div className="container">

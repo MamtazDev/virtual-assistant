@@ -280,8 +280,8 @@ body {
   resize: none;
   width: 100%;
   overflow-y: hidden;
-  overflow-x: auto;
-  white-space: nowrap;
+  overflow-x: hidden;
+  white-space: pre-wrap;
   scrollbar-width: thin;
   scrollbar-color: #888888 transparent;
 }
@@ -329,7 +329,7 @@ body {
   border: none;
   position: absolute;
   bottom: 5px;
-  right: 15px;
+  right: 5px;
   cursor: pointer;
 }
 

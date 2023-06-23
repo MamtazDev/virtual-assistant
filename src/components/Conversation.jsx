@@ -57,16 +57,25 @@ const Conversation = ({
   };
 
   const adjustTextareaHeight = () => {
+    // if (textareaRef.current) {
+    //   console.log(textareaRef, "texttt");
+    //   const rowCount = textareaRef.current.value.split("\n").length;
+    //   console.log(rowCount, "rowww");
+    //   const calculatedHeight = rowCount * lineHeight * 2;
+    //   if (rowCount > maxRows) {
+    //     textareaRef.current.style.overflowY = "auto";
+    //     textareaRef.current.style.height = `${maxRows * lineHeight * 2}px`;
+    //   } else {
+    //     textareaRef.current.style.overflowY = "hidden";
+    //     textareaRef.current.style.height = `${calculatedHeight}px`;
+    //   }
+    // }
     if (textareaRef.current) {
-      const rowCount = textareaRef.current.value.split("\n").length;
-      const calculatedHeight = rowCount * lineHeight * 2;
+      const { scrollHeight, clientHeight } = textareaRef.current;
 
-      if (rowCount > maxRows) {
-        textareaRef.current.style.overflowY = "auto";
-        textareaRef.current.style.height = `${maxRows * lineHeight * 2}px`;
-      } else {
-        textareaRef.current.style.overflowY = "hidden";
-        textareaRef.current.style.height = `${calculatedHeight}px`;
+      if (scrollHeight > clientHeight) {
+        textareaRef.current.style.height = `${scrollHeight}px`;
+        textareaRef.current.style.overflowY = "scroll";
       }
     }
   };
@@ -75,7 +84,7 @@ const Conversation = ({
     setNewVassHistory("");
     const calculatedHeight = 1 * lineHeight;
 
-    textareaRef.current.style.overflowY = "auto";
+    textareaRef.current.style.overflowY = "hidden";
     textareaRef.current.style.height = `${1 * lineHeight}px`;
   };
 
@@ -95,7 +104,7 @@ const Conversation = ({
     fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, "hiiiss");
+        // console.log(data, "hiiiss");
         setHistory(data.history);
         setResponse(data.answer);
         setNewVassHistory("");

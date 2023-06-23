@@ -54,7 +54,7 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "peeee");
+        // console.log(data, "peeee");
         setVaasId(data.vaas_sid);
         if (data.vaas_sid) {
           fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
@@ -127,8 +127,8 @@ function App() {
   // }, []);
   // ---previous code---
 
-  console.log(config, "config");
-  console.log(permission, "permiss");
+  // console.log(config, "config");
+  // console.log(permission, "permiss");
 
   return (
     <div>
