@@ -9,10 +9,9 @@ const Footer = ({ config, permission }) => {
     <div className="footer">
       <div className="container">
         <div className="footer_inner">
-          {config?.control_buttons && permission?.length > 0 && (
-            <div className="btn_group">
-              {/* --- previous button --- */}
-              {/* {config.appointment && (
+          <div className="btn_group">
+            {/* --- previous button --- */}
+            {config.appointment && (
               <a
                 target="_blank"
                 href={
@@ -76,13 +75,15 @@ const Footer = ({ config, permission }) => {
                   <span>Quick Call</span>
                 </button>
               </a>
-            )} */}
+            )}
 
-              {/* --- previous button --- */}
+            {/* --- previous button --- */}
 
-              {/* --- new button --- */}
+            {/* --- new button --- */}
 
-              {permission[0] === true && (
+            {config?.control_buttons &&
+              permission?.length > 0 &&
+              permission[0] === true && (
                 <a
                   href="https://testenv.innobyteslab.com/page/login.html"
                   rel="noreferrer"
@@ -99,7 +100,9 @@ const Footer = ({ config, permission }) => {
                   </button>
                 </a>
               )}
-              {permission[1] === true && (
+            {config?.control_buttons &&
+              permission?.length > 0 &&
+              permission[1] === true && (
                 <a
                   href="https://testenv.innobyteslab.com/page/logout.html"
                   rel="noreferrer"
@@ -116,7 +119,9 @@ const Footer = ({ config, permission }) => {
                   </button>
                 </a>
               )}
-              {permission[2] === true && (
+            {config?.control_buttons &&
+              permission?.length > 0 &&
+              permission[2] === true && (
                 <a
                   target="_blank"
                   href="https://testenv.innobyteslab.com/page/upload.html"
@@ -134,7 +139,9 @@ const Footer = ({ config, permission }) => {
                   </button>
                 </a>
               )}
-              {permission[3] === true && (
+            {config?.control_buttons &&
+              permission?.length > 0 &&
+              permission[3] === true && (
                 <a
                   target="_blank"
                   href="https://testenv.innobyteslab.com/page/delete.html"
@@ -152,7 +159,9 @@ const Footer = ({ config, permission }) => {
                   </button>
                 </a>
               )}
-              {permission[4] === true && (
+            {config?.control_buttons &&
+              permission?.length > 0 &&
+              permission[4] === true && (
                 <a
                   target="_blank"
                   href="https://testenv.innobyteslab.com/page/context.html"
@@ -171,13 +180,15 @@ const Footer = ({ config, permission }) => {
                 </a>
               )}
 
-              {/* --- new button --- */}
-            </div>
-          )}
+            {/* --- new button --- */}
+          </div>
+
           <p>
             <a
               style={{
-                color: `${config?.text_us_bg_color ? text_us_bg_color : "red"}`,
+                color: `${
+                  config?.text_us_bg_color ? text_us_bg_color : "#333f50"
+                }`,
               }}
               target="_blank"
               href={
