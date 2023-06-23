@@ -123,7 +123,6 @@ const Footer = ({ config, permission }) => {
               permission?.length > 0 &&
               permission[2] === true && (
                 <a
-                  target="_blank"
                   href="https://testenv.innobyteslab.com/page/upload.html"
                   rel="noreferrer"
                 >
@@ -143,7 +142,6 @@ const Footer = ({ config, permission }) => {
               permission?.length > 0 &&
               permission[3] === true && (
                 <a
-                  target="_blank"
                   href="https://testenv.innobyteslab.com/page/delete.html"
                   rel="noreferrer"
                 >
@@ -163,7 +161,6 @@ const Footer = ({ config, permission }) => {
               permission?.length > 0 &&
               permission[4] === true && (
                 <a
-                  target="_blank"
                   href="https://testenv.innobyteslab.com/page/context.html"
                   rel="noreferrer"
                 >

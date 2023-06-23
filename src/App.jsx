@@ -108,7 +108,9 @@ function App() {
         },
         body: JSON.stringify({
           vaas_sid: Id,
-          question: null,
+          question: "who are you",
+          answer: null,
+          feedback: null,
         }),
       })
         .then((res) => res.json())
