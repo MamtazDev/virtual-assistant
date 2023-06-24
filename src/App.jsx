@@ -45,36 +45,59 @@ function App() {
 
   // ---previous code ---
 
+  // const initialApi = () => {
+  //   setInitialLoading(true);
+  //   fetch(`${import.meta.env.VITE_BASE_URL}/`, {
+  //     headers: {
+  //       "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setVaasId(data.vaas_sid);
+  //       if (data.vaas_sid) {
+  //         fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+  //           },
+  //           body: JSON.stringify({
+  //             vaas_sid: data.vaas_sid,
+  //             question: null,
+  //             answer: null,
+  //             feedback: null,
+  //           }),
+  //         })
+  //           .then((res) => res.json())
+  //           .then((data) => {
+  //             setPermission(data.permissions);
+  //           });
+  //       }
+  //       localStorage.setItem("veryVerseVassID", data.vaas_sid);
+  //       setinitialAnswer(data.answer);
+  //       setInitialLoading(false);
+  //     });
+  // };
+
   const initialApi = () => {
     setInitialLoading(true);
-    fetch(`${import.meta.env.VITE_BASE_URL}/`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
+      method: "PUT",
       headers: {
+        "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
       },
+      body: JSON.stringify({
+        vaas_sid: null,
+        question: null,
+        answer: null,
+        feedback: null,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data, "peeee");
-        setVaasId(data.vaas_sid);
-        if (data.vaas_sid) {
-          fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-            },
-            body: JSON.stringify({
-              vaas_sid: data.vaas_sid,
-              question: null,
-              answer: null,
-              feedback: null,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              setPermission(data.permissions);
-            });
-        }
+        setPermission(data.permissions);
         localStorage.setItem("veryVerseVassID", data.vaas_sid);
         setinitialAnswer(data.answer);
         setInitialLoading(false);
@@ -110,7 +133,7 @@ function App() {
         },
         body: JSON.stringify({
           vaas_sid: Id,
-          question: "who are you",
+          question: null,
           answer: null,
           feedback: null,
         }),
