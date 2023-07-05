@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
-const SignIn = ({ show, handleClose }) => {
+
+const SignIn = ({ show, handleClose, handleSignUp }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -43,7 +43,7 @@ const SignIn = ({ show, handleClose }) => {
           </p>
 
           <p className="text-center">Need an account? Forgot password?</p>
-          <h5 className="text-center">
+          <h5 onClick={handleSignUp} className="text-center">
             <u>SIGN UP</u>{" "}
           </h5>
         </div>

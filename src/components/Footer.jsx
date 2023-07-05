@@ -4,12 +4,18 @@ import call from "../assets/call.png";
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import SignIn from "../Utils/Modals/SignIn";
+import SignUp from "../Utils/Modals/SignUp";
 
 const Footer = ({ config, permission }) => {
   const [show, setShow] = useState(true);
+  const [signUpShow, setSignUpShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleSignUp = () => {
+    setShow(false);
+    setSignUpShow(true);
+  };
   return (
     <div className="footer">
       <div className="container">
@@ -102,7 +108,16 @@ const Footer = ({ config, permission }) => {
                     <span>Sign in</span>
                   </Button>
 
-                  <SignIn show={show} handleClose={handleClose} />
+                  <SignIn
+                    show={show}
+                    handleClose={handleClose}
+                    handleSignUp={handleSignUp}
+                    signUpShow={signUpShow}
+                  />
+                  <SignUp
+                    signUpShow={signUpShow}
+                    setSignUpShow={setSignUpShow}
+                  />
                 </div>
               )}
             {config?.control_buttons &&
