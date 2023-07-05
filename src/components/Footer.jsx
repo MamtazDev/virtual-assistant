@@ -1,10 +1,15 @@
 import calender from "../assets/calender.png";
 import text from "../assets/text.png";
 import call from "../assets/call.png";
+import { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import SignIn from "../Utils/Modals/SignIn";
 
 const Footer = ({ config, permission }) => {
-  // console.log(config, "connn");
-  // console.log(permission, "peeermission");
+  const [show, setShow] = useState(true);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <div className="footer">
       <div className="container">
@@ -84,21 +89,21 @@ const Footer = ({ config, permission }) => {
             {config?.control_buttons &&
               permission?.length > 0 &&
               permission[0] === true && (
-                <a
-                  href="https://testenv.innobyteslab.com/page/login.html"
-                  rel="noreferrer"
-                >
-                  <button
+                <div>
+                  <Button
                     style={{
                       backgroundColor: config.control_buttons_bg_color
                         ? config.control_buttons_bg_color
                         : "#333f50",
                     }}
-                    className="violet_btn"
+                    className="violet_btn border-0"
+                    onClick={handleShow}
                   >
                     <span>Sign in</span>
-                  </button>
-                </a>
+                  </Button>
+
+                  <SignIn show={show} handleClose={handleClose} />
+                </div>
               )}
             {config?.control_buttons &&
               permission?.length > 0 &&

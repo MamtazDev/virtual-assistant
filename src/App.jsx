@@ -4,6 +4,7 @@ import Conversation from "./components/Conversation";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import messenger from "./assets/ai-face.png";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [display, setDisplay] = useState(false);
