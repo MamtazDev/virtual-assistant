@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 
-
 const SignIn = ({ show, handleClose, handleSignUp }) => {
   return (
     <Modal show={show} onHide={handleClose}>
@@ -9,12 +8,12 @@ const SignIn = ({ show, handleClose, handleSignUp }) => {
         <Modal.Title>SIGN IN</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
+        <form onSubmit={handleSignUp}>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">
               Email
             </label>
-            <input type="email" class="form-control" />
+            <input type="text" class="form-control" name="name" required />
             <div class="form-text">
               We'll never share your email with anyone else.
             </div>
@@ -23,7 +22,12 @@ const SignIn = ({ show, handleClose, handleSignUp }) => {
             <label for="exampleInputPassword1" class="form-label">
               Password
             </label>
-            <input type="password" class="form-control" />
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              required
+            />
           </div>
           <div class="mb-3 form-check">
             <input type="checkbox" class="checkbox form-check-input" />
@@ -43,7 +47,7 @@ const SignIn = ({ show, handleClose, handleSignUp }) => {
           </p>
 
           <p className="text-center">Need an account? Forgot password?</p>
-          <h5 onClick={handleSignUp} className="text-center">
+          <h5 className="text-center">
             <u>SIGN UP</u>{" "}
           </h5>
         </div>

@@ -5,16 +5,53 @@ import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import SignIn from "../Utils/Modals/SignIn";
 import SignUp from "../Utils/Modals/SignUp";
+import SignOut from "../Utils/Modals/SignOut";
 
-const Footer = ({ config, permission }) => {
-  const [show, setShow] = useState(true);
+const Footer = ({ config, permission, vaasId }) => {
+  const [show, setShow] = useState(false);
   const [signUpShow, setSignUpShow] = useState(false);
+  const [signOutShow, setSignOutShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSignUp = () => {
-    setShow(false);
-    setSignUpShow(true);
+  const handleSignUp = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const username = form.name.value;
+    const password = form.password.value;
+
+    const data = {
+      username,
+      password,
+    };
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((datas) => console.log(datas));
+
+    console.log(data, "ddd");
+  };
+
+  const handleSignout = () => {
+    fetch(`${import.meta.env.VITE_BASE_URL}/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      },
+    })
+      .then((res) => res.json())
+      .then((datas) => console.log(datas));
+    setSignOutShow(false);
   };
   return (
     <div className="footer">
@@ -96,7 +133,7 @@ const Footer = ({ config, permission }) => {
               permission?.length > 0 &&
               permission[0] === true && (
                 <div>
-                  <Button
+                  <button
                     style={{
                       backgroundColor: config.control_buttons_bg_color
                         ? config.control_buttons_bg_color
@@ -106,7 +143,7 @@ const Footer = ({ config, permission }) => {
                     onClick={handleShow}
                   >
                     <span>Sign in</span>
-                  </Button>
+                  </button>
 
                   <SignIn
                     show={show}
@@ -124,7 +161,7 @@ const Footer = ({ config, permission }) => {
               permission?.length > 0 &&
               permission[1] === true && (
                 <a
-                  href="https://testenv.innobyteslab.com/page/logout.html"
+                  // href="https://testenv.innobyteslab.com/page/logout.html"
                   rel="noreferrer"
                 >
                   <button
@@ -134,9 +171,15 @@ const Footer = ({ config, permission }) => {
                         : "#333f50",
                     }}
                     className="violet_btn"
+                    onClick={() => setSignOutShow(true)}
                   >
                     <span>Sign out</span>
                   </button>
+                  <SignOut
+                    signOutShow={signOutShow}
+                    setSignOutShow={setSignOutShow}
+                    handleSignout={handleSignout}
+                  />
                 </a>
               )}
             {config?.control_buttons &&

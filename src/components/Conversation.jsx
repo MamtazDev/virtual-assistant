@@ -19,6 +19,8 @@ const Conversation = ({
   initialLoading,
   history,
   setHistory,
+  loadingText,
+  setLoadingText,
 }) => {
   const [newVassHistory, setNewVassHistory] = useState("");
   const [apiKey, setApiKey] = useState("test-x0848bd789fjk13");
@@ -89,6 +91,7 @@ const Conversation = ({
   };
 
   const HistoryHandler = () => {
+    setLoadingText("Thinking ...");
     setLoading(true);
     const requestOptions = {
       method: "PUT",
@@ -109,6 +112,7 @@ const Conversation = ({
         setResponse(data.answer);
         setNewVassHistory("");
         setLoading(false);
+        setLoadingText("");
         setText("");
       });
 
@@ -195,14 +199,18 @@ const Conversation = ({
             <img src={config.logo ? config.logo : aiFace} alt="" />
 
             {initialLoading ? (
-              <div
-                style={{
-                  borderTop: `4px solid ${
-                    config.spinner_color ? config.spinner_color : ""
-                  }`,
-                }}
-                className="loading "
-              ></div>
+              <div className="d-flex align-items-center">
+                {" "}
+                <div
+                  style={{
+                    borderTop: `4px solid ${
+                      config.spinner_color ? config.spinner_color : ""
+                    }`,
+                  }}
+                  className="loading "
+                ></div>
+                <p style={{ marginBottom: "unset" }}>{loadingText}</p>
+              </div>
             ) : (
               <p
                 style={{
@@ -220,6 +228,17 @@ const Conversation = ({
             )}
           </div>
         )}
+
+        {/* {initialLoading && (
+          <div
+            style={{
+              borderTop: `4px solid ${
+                config.spinner_color ? config.spinner_color : ""
+              }`,
+            }}
+            className="loading "
+          ></div>
+        )} */}
 
         <div ref={chatContainerRef} className="chatting">
           {history?.length > 0 &&
@@ -289,14 +308,18 @@ const Conversation = ({
 
           {loading && (
             <div className="question">
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: sanitizeData(text),
-                }}
-              />
+              {text && (
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeData(text),
+                  }}
+                />
+              )}
               {/* <p>{text}</p> */}
             </div>
           )}
+
+          {/* {loading} */}
           {loading && (
             <div className="answer">
               <img src={config.logo ? config.logo : aiFace} alt="" />
@@ -308,6 +331,7 @@ const Conversation = ({
                 }}
                 className="loading"
               ></div>
+              <p style={{ marginBottom: "unset" }}>{loadingText}</p>
             </div>
           )}
         </div>

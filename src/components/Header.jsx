@@ -101,7 +101,7 @@ const Header = ({
                       <a
                         className="dropdown-item"
                         href="#"
-                        onClick={resetHistoryHandler}
+                        onClick={() => resetHistoryHandler()}
                       >
                         New conversation
                       </a>

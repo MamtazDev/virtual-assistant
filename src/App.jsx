@@ -16,72 +16,13 @@ function App() {
   const [initialLoading, setInitialLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [permission, setPermission] = useState(null);
+  const [loadingText, setLoadingText] = useState("");
 
   const [text, setText] = useState("");
   const [responseHandeler, setResponseHandeler] = useState();
 
-  // ---- previous code----
-  // const initialApi = (Base_api) => {
-  //   setInitialLoading(true);
-  //   fetch(`${import.meta.env.VITE_BASE_URL}/`, {
-  //     headers: {
-  //       "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setVaasId(data.vaas_sid);
-  //       setClicked(true);
-  //       setinitialAnswer(data.answer);
-  //       setInitialLoading(false);
-  //     });
-  // };
-
-  // const chatHandler = () => {
-  //   const url = `${import.meta.env.VITE_BASE_URL}/`;
-  //   if (!clicked) {
-  //     initialApi(url);
-  //   }
-  // };
-
-  // ---previous code ---
-
-  // const initialApi = () => {
-  //   setInitialLoading(true);
-  //   fetch(`${import.meta.env.VITE_BASE_URL}/`, {
-  //     headers: {
-  //       "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setVaasId(data.vaas_sid);
-  //       if (data.vaas_sid) {
-  //         fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
-  //           method: "PUT",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-  //           },
-  //           body: JSON.stringify({
-  //             vaas_sid: data.vaas_sid,
-  //             question: null,
-  //             answer: null,
-  //             feedback: null,
-  //           }),
-  //         })
-  //           .then((res) => res.json())
-  //           .then((data) => {
-  //             setPermission(data.permissions);
-  //           });
-  //       }
-  //       localStorage.setItem("veryVerseVassID", data.vaas_sid);
-  //       setinitialAnswer(data.answer);
-  //       setInitialLoading(false);
-  //     });
-  // };
-
   const initialApi = () => {
+    setLoadingText("Loading ...");
     setInitialLoading(true);
     fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
       method: "PUT",
@@ -100,8 +41,10 @@ function App() {
       .then((data) => {
         setPermission(data.permissions);
         localStorage.setItem("veryVerseVassID", data.vaas_sid);
+        setVaasId(data.vaas_sid);
         setinitialAnswer(data.answer);
         setInitialLoading(false);
+        setLoadingText("");
       });
   };
 
@@ -113,6 +56,8 @@ function App() {
 
   useEffect(() => {
     const Id = localStorage.getItem("veryVerseVassID");
+    setLoadingText("Loading...");
+    setLoading(true);
     fetch(`${import.meta.env.VITE_BASE_URL}/config/`, {
       headers: {
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
@@ -125,7 +70,8 @@ function App() {
 
     if (Id) {
       setVaasId(Id);
-
+      setLoadingText("Loading ...");
+      setLoading(true);
       fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
         method: "PUT",
         headers: {
@@ -143,6 +89,8 @@ function App() {
         .then((data) => {
           setHistory(data.history);
           setPermission(data.permissions);
+          setLoading(false);
+          setLoadingText("");
         });
     } else if (!Id) {
       initialApi();
@@ -187,10 +135,12 @@ function App() {
             responseHandeler={responseHandeler}
             setResponseHandeler={setResponseHandeler}
             history={history}
+            loadingText={loadingText}
+            setLoadingText={setLoadingText}
             setHistory={setHistory}
           />
 
-          <Footer config={config} permission={permission} />
+          <Footer config={config} permission={permission} vaasId={vaasId} />
         </div>
       </div>
     </div>
