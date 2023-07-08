@@ -42,12 +42,15 @@ const Footer = ({ config, permission, vaasId }) => {
   };
 
   const handleSignout = () => {
-    fetch(`${import.meta.env.VITE_BASE_URL}/logout`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/logout/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
       },
+      body: JSON.stringify({
+        vaas_sid: vaasId,
+      }),
     })
       .then((res) => res.json())
       .then((datas) => console.log(datas));
