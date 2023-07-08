@@ -349,6 +349,8 @@ body {
 }
 
 .divider span {
+  position: relative;
+  background-color: white;
   display: block;
   text-align: center;
   border: 1px solid gainsboro;
@@ -433,6 +435,56 @@ body {
   border-radius: 8px;
   padding: 8px 16px;
   color: #35255c;
+}
+
+.modal-content {
+  max-width: 400px;
+}
+
+.modal-header {
+  border: unset !important;
+  padding-bottom: unset !important;
+}
+
+.modal-title {
+  font-size: 18px !important;
+}
+
+.modal-header button {
+  border: 1px solid black;
+  border-radius: 100%;
+  /* font-size: 16px !important; */
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.singinForm {
+  position: relative;
+}
+.custom_toast {
+  position: absolute;
+  width: 500px;
+  top: 70px;
+  right: -70px;
+  background-color: #feecb3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-left: 3px solid #d9a401;
+}
+.custom_toast p {
+  margin: unset;
+}
+
+.warning_icon {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cursor_pointer {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 991px) {

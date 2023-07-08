@@ -2,29 +2,34 @@ import calender from "../assets/calender.png";
 import text from "../assets/text.png";
 import call from "../assets/call.png";
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
 import SignIn from "../Utils/Modals/SignIn";
 import SignUp from "../Utils/Modals/SignUp";
 import SignOut from "../Utils/Modals/SignOut";
+import SignUpSuccess from "../Utils/Modals/SignUpSuccess";
 
-const Footer = ({ config, permission, vaasId }) => {
+const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
+  const [error, setError] = useState(false);
+
   const [show, setShow] = useState(false);
   const [signUpShow, setSignUpShow] = useState(false);
   const [signOutShow, setSignOutShow] = useState(false);
+  const [signUpSuccessShow, setSignUpSuccessShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSignUp = (event) => {
+
+  const handleSignIn = (event) => {
     event.preventDefault();
 
     const form = event.target;
 
-    const username = form.name.value;
+    const username = form.email.value;
     const password = form.password.value;
 
     const data = {
       username,
       password,
+      vaas_sid: vaasId,
     };
 
     fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
@@ -36,9 +41,15 @@ const Footer = ({ config, permission, vaasId }) => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((datas) => console.log(datas));
-
-    console.log(data, "ddd");
+      .then((datas) => {
+        console.log(datas);
+        if (datas.message === "sign in successful") {
+          updateButtonPermission();
+          setShow(false);
+        } else if (datas.Error) {
+          setError(true);
+        }
+      });
   };
 
   const handleSignout = () => {
@@ -53,8 +64,52 @@ const Footer = ({ config, permission, vaasId }) => {
       }),
     })
       .then((res) => res.json())
-      .then((datas) => console.log(datas));
-    setSignOutShow(false);
+      .then((datas) => {
+        if (datas.message) {
+          updateButtonPermission();
+          setSignOutShow(false);
+        }
+      });
+  };
+
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const form = event.target;
+
+    const first = form.firstName.value;
+    const last = form.lastName.value;
+    const email = form.email.value;
+    const url = form.companyUrl.value;
+
+    const data = {
+      first,
+      last,
+      email,
+      url,
+      vaas_sid: vaasId,
+    };
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/signup/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((datas) => {
+        if (datas.Notification) {
+          // updateButtonPermission();
+          // setShow(false);
+          setSignUpShow(false);
+          setSignUpSuccessShow(true);
+        }
+
+        console.log(datas, "gggg");
+      });
+
+    console.log(data, "signup");
   };
   return (
     <div className="footer">
@@ -151,12 +206,21 @@ const Footer = ({ config, permission, vaasId }) => {
                   <SignIn
                     show={show}
                     handleClose={handleClose}
-                    handleSignUp={handleSignUp}
+                    handleSignIn={handleSignIn}
+                    setShow={setShow}
                     signUpShow={signUpShow}
+                    setSignUpShow={setSignUpShow}
+                    error={error}
+                    setError={setError}
                   />
                   <SignUp
                     signUpShow={signUpShow}
                     setSignUpShow={setSignUpShow}
+                    handleSignUp={handleSignUp}
+                  />
+                  <SignUpSuccess
+                    signUpSuccessShow={signUpSuccessShow}
+                    setSignUpSuccessShow={setSignUpSuccessShow}
                   />
                 </div>
               )}

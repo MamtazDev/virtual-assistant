@@ -22,6 +22,7 @@ const SignOut = ({ signOutShow, setSignOutShow, handleSignout }) => {
             style={{ backgroundColor: "#a2a2a2" }}
             type="submit"
             className="btn w-100 text-white mb-5"
+            onClick={() => setSignOutShow(false)}
           >
             CANCEL
           </button>

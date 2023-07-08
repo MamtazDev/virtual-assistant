@@ -54,6 +54,29 @@ function App() {
     initialApi();
   };
 
+  const updateButtonPermission = () => {
+    fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      },
+      body: JSON.stringify({
+        vaas_sid: vaasId,
+        question: null,
+        answer: null,
+        feedback: null,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // setHistory(data.history);
+        setPermission(data.permissions);
+        // setLoading(false);
+        // setLoadingText("");
+      });
+  };
+
   useEffect(() => {
     const Id = localStorage.getItem("veryVerseVassID");
     setLoadingText("Loading...");
@@ -140,7 +163,12 @@ function App() {
             setHistory={setHistory}
           />
 
-          <Footer config={config} permission={permission} vaasId={vaasId} />
+          <Footer
+            config={config}
+            permission={permission}
+            vaasId={vaasId}
+            updateButtonPermission={updateButtonPermission}
+          />
         </div>
       </div>
     </div>
