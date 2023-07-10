@@ -37,6 +37,7 @@ const Login = () => {
       .then((datas) => {
         console.log(datas);
         if (datas.message === "sign in successful") {
+          localStorage.setItem("token", datas["Bearer token"]);
           navigate("/");
         } else if (datas.Error) {
           setError(true);
