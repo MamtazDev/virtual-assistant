@@ -1,11 +1,11 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-const SignUp = ({ signUpShow, setSignUpShow, handleSignUp }) => {
+const SignUp = ({ signUpShow, setSignUpShow, handleSignUp, config }) => {
   return (
     <Modal show={signUpShow} onHide={() => setSignUpShow(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>What List SIGN UP</Modal.Title>
+        <Modal.Title> Waitlist SIGN UP</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSignUp}>
@@ -32,7 +32,14 @@ const SignUp = ({ signUpShow, setSignUpShow, handleSignUp }) => {
           </div>
 
           <button
-            style={{ backgroundColor: "#ED5684" }}
+            style={{
+              backgroundColor: config.modal_primary_button_bg_color
+                ? `#${config.modal_primary_button_bg_color}`
+                : "#ED5684",
+              color: config.modal_primary_button_text_color
+                ? `#${config.modal_primary_button_text_color}`
+                : "#FFFFFF",
+            }}
             type="submit"
             class="btn w-100 text-white"
           >

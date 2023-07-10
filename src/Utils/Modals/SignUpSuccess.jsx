@@ -1,11 +1,11 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-const SignUpSuccess = ({ signUpSuccessShow, setSignUpSuccessShow }) => {
+const SignUpSuccess = ({ signUpSuccessShow, setSignUpSuccessShow, config }) => {
   return (
     <Modal show={signUpSuccessShow} onHide={() => setSignUpSuccessShow(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>SIGN OUT</Modal.Title>
+        <Modal.Title>SIGN UP</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>
@@ -19,7 +19,14 @@ const SignUpSuccess = ({ signUpSuccessShow, setSignUpSuccessShow }) => {
             Thanks for signing up to our waitlist. We'll be in touch soon.
           </p>
           <button
-            style={{ backgroundColor: "#ED5684" }}
+            style={{
+              backgroundColor: config.modal_primary_button_bg_color
+                ? `#${config.modal_primary_button_bg_color}`
+                : "#ED5684",
+              color: config.modal_primary_button_text_color
+                ? `#${config.modal_primary_button_text_color}`
+                : "#FFFFFF",
+            }}
             type="submit"
             className="btn w-100 text-white "
             onClick={() => setSignUpSuccessShow(false)}

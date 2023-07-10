@@ -104,7 +104,7 @@ const Conversation = ({
         question: text,
       }),
     };
-    fetch(`${import.meta.env.VITE_BASE_URL}/historyv2/`, requestOptions)
+    fetch(`${import.meta.env.VITE_BASE_URL}/converse/`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data, "hiiiss");
@@ -144,7 +144,7 @@ const Conversation = ({
     const answer = chat[1];
     const vaas_sid = vaasId;
     const feedback = status;
-    const apiUrl = `${import.meta.env.VITE_BASE_URL}/historyv2/`;
+    const apiUrl = `${import.meta.env.VITE_BASE_URL}/converse/`;
 
     updateData(apiUrl, vaas_sid, question, answer, feedback);
   };

@@ -1,29 +1,71 @@
-import React from "react";
-import { Button, Modal } from "react-bootstrap";
-import crossIcon from "../../assets/crossIcon.png";
-import warningIcon from "../../assets/warningIcon.png";
+import React, { useEffect, useState } from "react";
+import "./Login.css";
+import crossIcon from "../assets/crossIcon.png";
+import warningIcon from "../assets/warningIcon.png";
+import { useNavigate } from "react-router-dom";
 
-const SignIn = ({
-  show,
-  handleClose,
-  handleSignIn,
-  setShow,
-  setSignUpShow,
-  error,
-  setError,
-  config,
-}) => {
-  const handleSignupModal = () => {
-    setSignUpShow(true);
-    setShow(false);
+const Login = () => {
+  const [config, setConfig] = useState([]);
+  const [vaasId, setVaasId] = useState(null);
+  const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSignIn = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const username = form.email.value;
+    const password = form.password.value;
+
+    const data = {
+      username,
+      password,
+    };
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        vaas_sid: vaasId,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((datas) => {
+        console.log(datas);
+        if (datas.message === "sign in successful") {
+          navigate("/");
+        } else if (datas.Error) {
+          setError(true);
+        }
+      });
   };
+
+  useEffect(() => {
+    const Id = localStorage.getItem("veryVerseVassID");
+
+    if (Id) {
+      setVaasId(Id);
+    }
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/config/`, {
+      headers: {
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setConfig(data);
+      });
+  }, []);
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>SIGN IN</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form onSubmit={handleSignIn} className="singinForm">
+    <div className="container mt-5 d-flex justify-content-center">
+      <div className="mainContainer">
+        <h4 className="mb-3">SIGN OUT</h4>
+        <form className="singinForm" onSubmit={handleSignIn}>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">
               Email
@@ -75,18 +117,12 @@ const SignIn = ({
             </div>
           )}
         </form>
-        <div>
+        {/* <div>
           <p className="divider">
             <span>OR</span>{" "}
           </p>
 
           <p className="text-center">Need an account? Forgot password?</p>
-
-          {/* <h5 className="text-center">
-            <u style={{ cursor: "pointer" }} onClick={handleSignupModal}>
-              SIGN UP
-            </u>{" "}
-          </h5> */}
 
           <button
             style={{
@@ -98,14 +134,13 @@ const SignIn = ({
                 : "#FFFFFF",
             }}
             className="btn w-100 text-white mb-5"
-            onClick={handleSignupModal}
           >
             SIGN UP
           </button>
-        </div>
-      </Modal.Body>
-    </Modal>
+        </div> */}
+      </div>
+    </div>
   );
 };
 
-export default SignIn;
+export default Login;

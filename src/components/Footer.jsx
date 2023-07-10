@@ -29,7 +29,6 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
     const data = {
       username,
       password,
-      vaas_sid: vaasId,
     };
 
     fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
@@ -37,6 +36,7 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
       headers: {
         "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        vaas_sid: vaasId,
       },
       body: JSON.stringify(data),
     })
@@ -58,10 +58,8 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
       headers: {
         "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-      },
-      body: JSON.stringify({
         vaas_sid: vaasId,
-      }),
+      },
     })
       .then((res) => res.json())
       .then((datas) => {
@@ -86,7 +84,6 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
       last,
       email,
       url,
-      vaas_sid: vaasId,
     };
 
     fetch(`${import.meta.env.VITE_BASE_URL}/signup/`, {
@@ -94,6 +91,7 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
       headers: {
         "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        vaas_sid: vaasId,
       },
       body: JSON.stringify(data),
     })
@@ -111,6 +109,8 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
 
     console.log(data, "signup");
   };
+
+  console.log(config, "connnn");
   return (
     <div className="footer">
       <div className="container">
@@ -212,15 +212,18 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
                     setSignUpShow={setSignUpShow}
                     error={error}
                     setError={setError}
+                    config={config}
                   />
                   <SignUp
                     signUpShow={signUpShow}
                     setSignUpShow={setSignUpShow}
                     handleSignUp={handleSignUp}
+                    config={config}
                   />
                   <SignUpSuccess
                     signUpSuccessShow={signUpSuccessShow}
                     setSignUpSuccessShow={setSignUpSuccessShow}
+                    config={config}
                   />
                 </div>
               )}
@@ -246,6 +249,7 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
                     signOutShow={signOutShow}
                     setSignOutShow={setSignOutShow}
                     handleSignout={handleSignout}
+                    config={config}
                   />
                 </a>
               )}
@@ -302,7 +306,7 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
                     }}
                     className="violet_btn"
                   >
-                    <span>Create context</span>
+                    <span>Create Training</span>
                   </button>
                 </a>
               )}
