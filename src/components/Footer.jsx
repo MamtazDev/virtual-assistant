@@ -7,7 +7,13 @@ import SignUp from "../Utils/Modals/SignUp";
 import SignOut from "../Utils/Modals/SignOut";
 import SignUpSuccess from "../Utils/Modals/SignUpSuccess";
 
-const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
+const Footer = ({
+  config,
+  permission,
+  vaasId,
+  updateButtonPermission,
+  setToken,
+}) => {
   const [error, setError] = useState(false);
 
   const [show, setShow] = useState(false);
@@ -42,9 +48,10 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
     })
       .then((res) => res.json())
       .then((datas) => {
-        console.log(datas);
         if (datas.message === "sign in successful") {
           updateButtonPermission();
+          localStorage.setItem("token", datas["Bearer token"]);
+          setToken(datas["Bearer token"]);
           setShow(false);
         } else if (datas.Error) {
           setError(true);
@@ -65,6 +72,8 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
       .then((datas) => {
         if (datas.message) {
           updateButtonPermission();
+          localStorage.removeItem("token");
+          setToken(null);
           setSignOutShow(false);
         }
       });
@@ -100,6 +109,8 @@ const Footer = ({ config, permission, vaasId, updateButtonPermission }) => {
         if (datas.Notification) {
           // updateButtonPermission();
           // setShow(false);
+          localStorage.setItem("token", datas["Bearer token"]);
+          setToken(datas["Bearer token"]);
           setSignUpShow(false);
           setSignUpSuccessShow(true);
         }

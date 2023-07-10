@@ -19,6 +19,7 @@ function App() {
   const [history, setHistory] = useState([]);
   const [permission, setPermission] = useState(null);
   const [loadingText, setLoadingText] = useState("");
+  const [token, setToken] = useState(null);
 
   const [text, setText] = useState("");
   const [responseHandeler, setResponseHandeler] = useState();
@@ -33,6 +34,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         vaas_sid: null,
@@ -64,6 +66,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         vaas_sid: vaasId,
@@ -83,11 +86,16 @@ function App() {
 
   useEffect(() => {
     const Id = localStorage.getItem("veryVerseVassID");
+    const tkn = localStorage.getItem("token");
+    if (tkn) {
+      setToken(tkn);
+    }
     setLoadingText("Loading...");
     setLoading(true);
     fetch(`${import.meta.env.VITE_BASE_URL}/config/`, {
       headers: {
         "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${tkn}`,
       },
     })
       .then((res) => res.json())
@@ -104,6 +112,7 @@ function App() {
         headers: {
           "Content-Type": "application/json",
           "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+          Authorization: `Bearer ${tkn}`,
         },
         body: JSON.stringify({
           vaas_sid: Id,
@@ -129,9 +138,6 @@ function App() {
   //   chatHandler();
   // }, []);
   // ---previous code---
-
-  console.log(config, "config");
-  console.log(permission, "permiss");
 
   return (
     <div>
@@ -169,6 +175,7 @@ function App() {
                   loadingText={loadingText}
                   setLoadingText={setLoadingText}
                   setHistory={setHistory}
+                  token={token}
                 />
 
                 <Footer
@@ -176,6 +183,7 @@ function App() {
                   permission={permission}
                   vaasId={vaasId}
                   updateButtonPermission={updateButtonPermission}
+                  setToken={setToken}
                 />
               </div>
             </div>
