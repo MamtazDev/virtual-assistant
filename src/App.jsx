@@ -189,7 +189,7 @@ function App() {
             </div>
           }
         ></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="login" element={<Login />}></Route>
       </Routes>
     </div>
   );
