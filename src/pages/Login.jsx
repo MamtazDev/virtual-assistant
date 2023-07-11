@@ -4,6 +4,8 @@ import crossIcon from "../assets/crossIcon.png";
 import warningIcon from "../assets/warningIcon.png";
 import { useNavigate } from "react-router-dom";
 import SignUp from "../Utils/Modals/SignUp";
+import SignUpSuccess from "../Utils/Modals/SignUpSuccess";
+import { Modal } from "react-bootstrap";
 
 const Login = () => {
   const [config, setConfig] = useState([]);
@@ -11,6 +13,7 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [signUpShow, setSignUpShow] = useState(false);
   const [token, setToken] = useState(undefined);
+  const [signUpSuccessShow, setSignUpSuccessShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -86,10 +89,15 @@ const Login = () => {
       .then((res) => res.json())
       .then((datas) => {
         if (datas.Notification) {
-          navigate("/");
           setSignUpShow(false);
+          setSignUpSuccessShow(true);
         }
       });
+  };
+
+  const handleSignupSuccess = () => {
+    setSignUpSuccessShow(false);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -198,6 +206,42 @@ const Login = () => {
           handleSignUp={handleSignUp}
           config={config}
         />
+        <Modal
+          show={signUpSuccessShow}
+          onHide={() => setSignUpSuccessShow(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>SIGN UP</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <p
+                className="my-5 p-3"
+                style={{
+                  backgroundColor: "#f2f2f2",
+                  borderRadius: "10px",
+                }}
+              >
+                Thanks for signing up to our waitlist. We'll be in touch soon.
+              </p>
+              <button
+                style={{
+                  backgroundColor: config.modal_primary_button_bg_color
+                    ? `#${config.modal_primary_button_bg_color}`
+                    : "#ED5684",
+                  color: config.modal_primary_button_text_color
+                    ? `#${config.modal_primary_button_text_color}`
+                    : "#FFFFFF",
+                }}
+                type="submit"
+                className="btn w-100"
+                onClick={handleSignupSuccess}
+              >
+                DONE
+              </button>
+            </div>
+          </Modal.Body>
+        </Modal>
       </div>
     </div>
   );
