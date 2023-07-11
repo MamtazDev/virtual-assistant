@@ -65,7 +65,7 @@ const Login = () => {
   return (
     <div className="container mt-5 d-flex justify-content-center">
       <div className="mainContainer">
-        <h4 className="mb-3">SIGN OUT</h4>
+        <h4 className="mb-3">SIGN IN</h4>
         <form className="singinForm" onSubmit={handleSignIn}>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">
@@ -101,7 +101,7 @@ const Login = () => {
                 : "#FFFFFF",
             }}
             type="submit"
-            class="btn w-100 text-white"
+            class="btn w-100"
           >
             SIGN IN
           </button>
@@ -118,7 +118,7 @@ const Login = () => {
             </div>
           )}
         </form>
-        {/* <div>
+        <div>
           <p className="divider">
             <span>OR</span>{" "}
           </p>
@@ -132,13 +132,13 @@ const Login = () => {
                 : "#a2a2a2",
               color: config?.modal_secondary_button_text_color
                 ? `#${config?.modal_secondary_button_text_color}`
-                : "#FFFFFF",
+                : "red",
             }}
-            className="btn w-100 text-white mb-5"
+            className="btn w-100  mb-5"
           >
             SIGN UP
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   );

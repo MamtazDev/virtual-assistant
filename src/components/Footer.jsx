@@ -73,7 +73,7 @@ const Footer = ({
         if (datas.message) {
           updateButtonPermission();
           localStorage.removeItem("token");
-          setToken(null);
+          setToken(undefined);
           setSignOutShow(false);
         }
       });

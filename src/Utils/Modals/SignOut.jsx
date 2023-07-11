@@ -9,13 +9,13 @@ const SignOut = ({ signOutShow, setSignOutShow, handleSignout, config }) => {
       </Modal.Header>
       <Modal.Body>
         <div>
-          <p className="text-center ">Confirm Sign Out</p>
-          <div className="p-1">
+          <p className="text-center mt-5">Confirm Sign Out</p>
+          <div className="p-1 mb-5">
             <p>
               All private files uploaded or custom conversations (if any) will
               be permanently removed.
             </p>
-            <p className="mb-5">Config file key: “sign_out_message”.</p>
+            {/* <p className="mb-5">Config file key: “sign_out_message”.</p> */}
           </div>
           <button
             style={{
@@ -27,7 +27,7 @@ const SignOut = ({ signOutShow, setSignOutShow, handleSignout, config }) => {
                 : "#FFFFFF",
             }}
             type="submit"
-            className="btn w-100 text-white mb-5"
+            className="btn w-100  mb-5"
             onClick={handleSignout}
           >
             CONFIRM
@@ -42,7 +42,7 @@ const SignOut = ({ signOutShow, setSignOutShow, handleSignout, config }) => {
                 : "#FFFFFF",
             }}
             type="submit"
-            className="btn w-100 text-white mb-5"
+            className="btn w-100  mb-5"
             onClick={() => setSignOutShow(false)}
           >
             CANCEL

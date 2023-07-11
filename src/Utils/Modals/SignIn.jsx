@@ -58,7 +58,7 @@ const SignIn = ({
                 : "#FFFFFF",
             }}
             type="submit"
-            class="btn w-100 text-white"
+            class="btn w-100"
           >
             SIGN IN
           </button>
@@ -97,7 +97,7 @@ const SignIn = ({
                 ? `#${config?.modal_secondary_button_text_color}`
                 : "#FFFFFF",
             }}
-            className="btn w-100 text-white mb-5"
+            className="btn w-100  mb-5"
             onClick={handleSignupModal}
           >
             SIGN UP

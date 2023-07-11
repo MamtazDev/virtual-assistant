@@ -28,7 +28,7 @@ const SignUpSuccess = ({ signUpSuccessShow, setSignUpSuccessShow, config }) => {
                 : "#FFFFFF",
             }}
             type="submit"
-            className="btn w-100 text-white "
+            className="btn w-100"
             onClick={() => setSignUpSuccessShow(false)}
           >
             DONE

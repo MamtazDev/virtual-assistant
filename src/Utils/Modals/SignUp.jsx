@@ -41,7 +41,7 @@ const SignUp = ({ signUpShow, setSignUpShow, handleSignUp, config }) => {
                 : "#FFFFFF",
             }}
             type="submit"
-            class="btn w-100 text-white"
+            class="btn w-100"
           >
             SIGN UP
           </button>

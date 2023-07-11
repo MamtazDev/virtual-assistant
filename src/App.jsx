@@ -19,7 +19,7 @@ function App() {
   const [history, setHistory] = useState([]);
   const [permission, setPermission] = useState(null);
   const [loadingText, setLoadingText] = useState("");
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(undefined);
 
   const [text, setText] = useState("");
   const [responseHandeler, setResponseHandeler] = useState();
@@ -139,6 +139,7 @@ function App() {
   // }, []);
   // ---previous code---
 
+  console.log(config);
   return (
     <div>
       <Routes>
