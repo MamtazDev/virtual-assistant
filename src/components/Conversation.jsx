@@ -22,6 +22,7 @@ const Conversation = ({
   loadingText,
   setLoadingText,
   token,
+  customeHeader,
 }) => {
   const [newVassHistory, setNewVassHistory] = useState("");
   const [apiKey, setApiKey] = useState("test-x0848bd789fjk13");
@@ -96,11 +97,7 @@ const Conversation = ({
     setLoading(true);
     const requestOptions = {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
+      headers: customeHeader,
       body: JSON.stringify({
         vaas_sid: vaasId,
         question: text,
@@ -125,11 +122,7 @@ const Conversation = ({
   const updateData = (apiUrl, vaas_sid, question, answer, feedback) => {
     fetch(apiUrl, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
+      headers: customeHeader,
       body: JSON.stringify({ vaas_sid, question, answer, feedback }),
     })
       .then((response) => response.json())

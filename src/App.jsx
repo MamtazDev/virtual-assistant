@@ -26,16 +26,23 @@ function App() {
 
   const location = useLocation();
 
+  const customeHeader = token
+    ? {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${token}`,
+      }
+    : {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      };
+
   const initialApi = () => {
     setLoadingText("Loading ...");
     setInitialLoading(true);
     fetch(`${import.meta.env.VITE_BASE_URL}/converse/`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
+      headers: customeHeader,
       body: JSON.stringify({
         vaas_sid: null,
         question: null,
@@ -63,11 +70,7 @@ function App() {
   const updateButtonPermission = () => {
     fetch(`${import.meta.env.VITE_BASE_URL}/converse/`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
+      headers: customeHeader,
       body: JSON.stringify({
         vaas_sid: vaasId,
         question: null,
@@ -109,11 +112,7 @@ function App() {
       setLoading(true);
       fetch(`${import.meta.env.VITE_BASE_URL}/converse/`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "VAAS-API-Key": import.meta.env.VITE_API_KEY,
-          Authorization: `Bearer ${tkn}`,
-        },
+        headers: customeHeader,
         body: JSON.stringify({
           vaas_sid: Id,
           question: null,
@@ -177,6 +176,7 @@ function App() {
                   setLoadingText={setLoadingText}
                   setHistory={setHistory}
                   token={token}
+                  customeHeader={customeHeader}
                 />
 
                 <Footer

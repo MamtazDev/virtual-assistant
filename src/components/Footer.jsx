@@ -107,8 +107,7 @@ const Footer = ({
       .then((res) => res.json())
       .then((datas) => {
         if (datas.Notification) {
-          // updateButtonPermission();
-          // setShow(false);
+          updateButtonPermission();
           localStorage.setItem("token", datas["Bearer token"]);
           setToken(datas["Bearer token"]);
           setSignUpShow(false);
