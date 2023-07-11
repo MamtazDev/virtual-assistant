@@ -20,6 +20,7 @@ function App() {
   const [permission, setPermission] = useState(null);
   const [loadingText, setLoadingText] = useState("");
   const [token, setToken] = useState(undefined);
+  const [signUpShow, setSignUpShow] = useState(false);
 
   const [text, setText] = useState("");
   const [responseHandeler, setResponseHandeler] = useState();
@@ -185,6 +186,7 @@ function App() {
                   vaasId={vaasId}
                   updateButtonPermission={updateButtonPermission}
                   setToken={setToken}
+                  token={token}
                 />
               </div>
             </div>

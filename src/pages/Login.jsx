@@ -3,13 +3,27 @@ import "./Login.css";
 import crossIcon from "../assets/crossIcon.png";
 import warningIcon from "../assets/warningIcon.png";
 import { useNavigate } from "react-router-dom";
+import SignUp from "../Utils/Modals/SignUp";
 
 const Login = () => {
   const [config, setConfig] = useState([]);
   const [vaasId, setVaasId] = useState(null);
   const [error, setError] = useState(false);
+  const [signUpShow, setSignUpShow] = useState(false);
+  const [token, setToken] = useState(undefined);
 
   const navigate = useNavigate();
+
+  const customeHeader = token
+    ? {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${token}`,
+      }
+    : {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      };
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -45,8 +59,45 @@ const Login = () => {
       });
   };
 
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const form = event.target;
+
+    const first = form.firstName.value;
+    const last = form.lastName.value;
+    const email = form.email.value;
+    const url = form.companyUrl.value;
+
+    const data = {
+      first,
+      last,
+      email,
+      url,
+    };
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/signup/`, {
+      method: "POST",
+      headers: {
+        ...customeHeader,
+        vaas_sid: vaasId,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((datas) => {
+        if (datas.Notification) {
+          navigate("/");
+          setSignUpShow(false);
+        }
+      });
+  };
+
   useEffect(() => {
     const Id = localStorage.getItem("veryVerseVassID");
+    const tkn = localStorage.getItem("token");
+    if (tkn) {
+      setToken(tkn);
+    }
 
     if (Id) {
       setVaasId(Id);
@@ -135,10 +186,18 @@ const Login = () => {
                 : "red",
             }}
             className="btn w-100  mb-5"
+            onClick={() => setSignUpShow(true)}
           >
             SIGN UP
           </button>
         </div>
+
+        <SignUp
+          signUpShow={signUpShow}
+          setSignUpShow={setSignUpShow}
+          handleSignUp={handleSignUp}
+          config={config}
+        />
       </div>
     </div>
   );

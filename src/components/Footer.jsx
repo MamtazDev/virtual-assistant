@@ -13,6 +13,7 @@ const Footer = ({
   vaasId,
   updateButtonPermission,
   setToken,
+  token,
 }) => {
   const [error, setError] = useState(false);
 
@@ -20,6 +21,17 @@ const Footer = ({
   const [signUpShow, setSignUpShow] = useState(false);
   const [signOutShow, setSignOutShow] = useState(false);
   const [signUpSuccessShow, setSignUpSuccessShow] = useState(false);
+
+  const customeHeader = token
+    ? {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${token}`,
+      }
+    : {
+        "Content-Type": "application/json",
+        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+      };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -63,8 +75,7 @@ const Footer = ({
     fetch(`${import.meta.env.VITE_BASE_URL}/logout/`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        ...customeHeader,
         vaas_sid: vaasId,
       },
     })
@@ -98,8 +109,7 @@ const Footer = ({
     fetch(`${import.meta.env.VITE_BASE_URL}/signup/`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "VAAS-API-Key": import.meta.env.VITE_API_KEY,
+        ...customeHeader,
         vaas_sid: vaasId,
       },
       body: JSON.stringify(data),
@@ -113,14 +123,9 @@ const Footer = ({
           setSignUpShow(false);
           setSignUpSuccessShow(true);
         }
-
-        console.log(datas, "gggg");
       });
-
-    console.log(data, "signup");
   };
 
-  console.log(config, "connnn");
   return (
     <div className="footer">
       <div className="container">
